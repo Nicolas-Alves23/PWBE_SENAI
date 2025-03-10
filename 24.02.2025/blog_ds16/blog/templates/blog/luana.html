@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <title>Blog</title>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <h1>Aqui é flamengoooo</h1>
+    <p>Neymar vem para o flamengo</p>
+    <ul>
+      {% for i in postagens %}
+        <li>
+          <h1>{{i.titulo}}</h1>
+          <p>{{i.conteudo}}</p>
+        </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
