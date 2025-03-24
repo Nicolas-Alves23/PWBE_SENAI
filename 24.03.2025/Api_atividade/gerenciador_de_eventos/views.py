@@ -3,21 +3,20 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import Eventos
 from .serializers import EventSerializer
-from rest_framework import status, viewsets
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.filters import OrderingFilter
-from .filter import EventFilter
+from rest_framework import status
 
-class EventView(viewsets.ModelViewSet):
-    filter_backends = (DjangoFilterBackend,OrderingFilter)
-    filterset_class = EventFilter
-    ordering_fields = '__all__'
+
 
 # Método VISUALIZAR
 
 @api_view(['GET']) # Método Get que é usado nessa função abaixo
 def read_eventos(request):
     info = Eventos.objects.all()
+
+    bomba = request.query_params.get('categoria')
+    if bomba:
+        info = Eventos.filter(categoria__icontains = bomba)
+
     serializer = EventSerializer(info, many=True)
     return Response(serializer.data)
 
