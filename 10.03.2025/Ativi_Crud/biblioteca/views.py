@@ -33,21 +33,3 @@ def excluir_livro(request,pk):
         livro.delete()
         return redirect('listar_livros')
     return render(request,'excluir_livro.html', {'livro':livro})
-
-
-
-def lista_livro(request):
-    titulo = request.GET.get('titulo', None)
-    ano = request.GET.get('ano_pubi', None)
-    autor = request.GET.get('autor', None)
-
-    # Inicia o queryset com todos os livro
-    livro = Biblioteca.objects.all()
-
-    # Aplica o filtro para cada campo, se o valor for fornecido
-    if titulo:
-        livro = livro.filter(titulo__icontains=titulo) | livro.filter(ano=ano) | livro.filter(autor__icontains=autor) # 'icontains' para pesquisa insensível a maiúsculas/minúsculas
-
-
-    # Retorna os livro filtrados para a página
-    return render(request, 'listar_livro.html', {'livro': livro})
