@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view
 from .models import Eventos
 from .serializers import EventSerializer
 from rest_framework import status
-
+from datetime import datetime, timedelta
 
 
 # Método VISUALIZAR
@@ -12,10 +12,38 @@ from rest_framework import status
 @api_view(['GET']) # Método Get que é usado nessa função abaixo
 def read_eventos(request):
     info = Eventos.objects.all()
+    
+    # utilizando o query_params para fazer o filtro 
+    categoria = request.query_params.get('categoria')
+    # caso na url exista o termo 'categoria' esse if será ativo 
+    if categoria:
+        # dentro de todo o banco de dados ('info') filtra essa categoria
+        info = info.filter(categoria__icontains = categoria)
 
-    bomba = request.query_params.get('categoria')
-    if bomba:
-        info = Eventos.filter(categoria__icontains = bomba)
+    # Funcionando da mesma forma do item 'categoria'
+    data = request.query_params.get('data')
+    if data:
+        info = info.filter(data__icontains = data)
+
+    # A principal diferença desse bloco de código é que a quantidade é um int e não um filter exatamente
+    quantidade = request.query_params.get('quantidade')
+    if quantidade:
+        info = info[:int(quantidade)]# passamos no link a quantida que queremos e fazemos o return dessa informação
+
+    ordenacao = request.query_params.get('ordenacao')
+    if ordenacao:
+        info = info.order_by('data').values()# Order_by é utilizado para ordenar, no caso ordenaremos por data 
+
+    #-------------------------------------------------
+
+    # Para verificarmos os proximos 7 dias 
+    proximo = request.query_params.get('proximos')
+
+    if proximo:
+        data_atual = datetime.now()# Nossa data atual
+        data_futura = data_atual + timedelta(days=7)# Referente aos próximos 7 dias
+        info = info.filter(data__gte = data_atual, data__lte=data_futura) #filtrando os próximos 7 dias
+
 
     serializer = EventSerializer(info, many=True)
     return Response(serializer.data)
