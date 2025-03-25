@@ -4,6 +4,7 @@
 # else:
 #     print("É impar")
 
+# Fazendo uma média simples de notas
 n1 = float(input("Me passe uma nota = "))
 n2 = float(input("Me passe uma nota = "))
 n3 = float(input("Me passe uma nota = "))

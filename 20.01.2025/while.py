@@ -8,3 +8,5 @@ while True:
         print("É negativo")
         print(f"Seu número maior é {numero_maior}")
         break
+
+    # Relembrado while

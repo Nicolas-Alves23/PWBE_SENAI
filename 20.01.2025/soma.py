@@ -3,6 +3,7 @@
 # soma = n1 + n2
 # print (soma)
 
+# Soma simples
 n1 = int(input("Me passe o primeiro número = "))
 n2 = int(input("Me passe o segundo número = "))
 

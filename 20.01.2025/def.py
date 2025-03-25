@@ -7,6 +7,7 @@
 #     print(aocontrario)
 # palavra_ao_contrario(minha_string)
 
+# Utilizando funções (relembrando)
 def contar_carcteres(s):
     dicionario = {}
     for i in s:
