@@ -4,14 +4,14 @@ from .models import UsuarioDS16
 
 
 class UsuarioDS16Admin(UserAdmin):
-    list_display = ('username','email', 'data_nascimento', 'edv', 'padrinho', 'apelido')
+    list_display = ('username','email', 'data_nascimento', 'idade', 'pets', 'esolaridade')
 
     fieldsets = UserAdmin.fieldsets + (
-        (None,{'fields': ('data_nascimento', 'edv', 'padrinho', 'apelido')}),
+        (None,{'fields': ('data_nascimento', 'idade', 'pets', 'esolaridade')}),
     )
 
     add_fieldsets = UserAdmin.add_fieldsets + (
-        (None,{'fields': ('data_nascimento', 'edv', 'padrinho', 'apelido')}),
+        (None,{'fields': ('data_nascimento', 'idade', 'pets', 'esolaridade')}),
     )
 
 admin.site.register(UsuarioDS16,UsuarioDS16Admin)
