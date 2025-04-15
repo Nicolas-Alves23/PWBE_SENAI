@@ -4,6 +4,8 @@ from .models import *
 from .serializers import *
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import serializers
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 class PilotoPage(PageNumberPagination):
     page_size = 5
@@ -21,6 +23,24 @@ class PilotoListCreateAPIView(ListCreateAPIView):
     queryset = Piloto.objects.all()
     serializer_class = PilotoSerializer
     pagination_class = PilotoPage
+
+    @swagger_auto_schema(
+        operation_description= 'blalblabla',
+        responses={
+            200: PilotoSerializer(many=True),
+            400: 'Error'
+            }
+            manual_parameters=[
+                openapi.Parameter(
+                    'nome',
+                    openapi.IN_PATH,
+                    description='Filtrar pelo nome piloto'
+                    type=openapi.TYPE_STRING
+                )
+            ]
+    )
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
         queryset = super().get_queryset()
