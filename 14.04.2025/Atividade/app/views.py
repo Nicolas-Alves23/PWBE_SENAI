@@ -6,6 +6,7 @@ from .models import UsuarioDS16
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
+from .serializers import UsuarioSerializar
 
 @api_view(['POST'])
 def create_user(request):
@@ -22,9 +23,7 @@ def create_user(request):
     if UsuarioDS16.objects.filter(username=username).exists():
         return Response ({'Erro':f'Username {username} já existe'}, status=status.HTTP_400_BAD_REQUEST)
     
-    if UsuarioDS16.objects.filter(idade=idade).exists():
-        return Response ({'Erro':f'idade {idade} já existe'}, status=status.HTTP_400_BAD_REQUEST)
-    
+
     usuario = UsuarioDS16.objects.create_user(
             username=username,
             password=password,
@@ -56,4 +55,34 @@ def logar_usuario(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def output_user(request):
-    return Response({'Mensagem':'Olá! DS16'}, status=status.HTTP_200_OK)
+    usuario = UsuarioDS16.objects.all()
+    serializer = UsuarioSerializar(usuario, many = True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['PUT']) 
+@permission_classes([IsAuthenticated])
+def update_usuario(resquest, pk): # O pk é utilizado para pegar a primary key
+    try:
+        usuario = UsuarioDS16.objects.get (pk=pk)
+    except UsuarioDS16.DoesNotExist:
+        return Response({'erro': 'usuario inexistente'}, status= status.HTTP_404_NOT_FOUND)
+    
+    serializer = UsuarioSerializar(usuario, data=resquest.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_usuario(request, pk):
+    # Pegamos a pk e apagamos ela em sequencia
+    try:
+        usuario = UsuarioDS16.objects.get(pk=pk)
+    except UsuarioDS16.DoesNotExist():
+        return Response({'erro': 'usuario inexistente'}, status= status.HTTP_404_NOT_FOUND)
+
+
+    usuario.delete()
+    return Response({'Mensagem':f'foi apagado'}, status=status.HTTP_200_OK)
