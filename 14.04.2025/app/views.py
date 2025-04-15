@@ -29,19 +29,32 @@ class PilotoListCreateAPIView(ListCreateAPIView):
         responses={
             200: PilotoSerializer(many=True),
             400: 'Error'
-            }
+            },
             manual_parameters=[
                 openapi.Parameter(
                     'nome',
-                    openapi.IN_PATH,
-                    description='Filtrar pelo nome piloto'
+                    openapi.IN_QUERY,
+                    description='Filtrar pelo nome piloto',
                     type=openapi.TYPE_STRING
                 )
             ]
     )
+    
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
+    
+    @swagger_auto_schema(
+            operation_description='cria novo piloto',
+            request_body=PilotoSerializer,
+            responses={
+                201: PilotoSerializer,
+                400: 'ERROOOOOOOOO'
+            }
+    )
 
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)
+    
     def get_queryset(self):
         queryset = super().get_queryset()
         nome = self.request.query_params.get('nome')
