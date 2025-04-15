@@ -17,7 +17,17 @@ class PilotoRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = PilotoSerializer
     lookup_field = 'pk'
 
-
+    
+    @swagger_auto_schema(
+            operation_description='Pega o piloto do id fornecido',
+            responses={
+                201: PilotoSerializer,
+                400: 'ERROOOOOOOOO',
+                401: 'Not found'
+            }
+    )
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
 
 class PilotoListCreateAPIView(ListCreateAPIView):
     queryset = Piloto.objects.all()
@@ -39,7 +49,7 @@ class PilotoListCreateAPIView(ListCreateAPIView):
                 )
             ]
     )
-    
+
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
     
