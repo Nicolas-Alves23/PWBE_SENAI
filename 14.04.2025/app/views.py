@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework.generics import ListCreateAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from .models import *
 from .serializers import *
 from rest_framework.pagination import PageNumberPagination
@@ -9,6 +9,13 @@ class PilotoPage(PageNumberPagination):
     page_size = 5
     page_query_param = 'page_size'
     max_page_size = 10
+
+class PilotoRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    queryset = Piloto.objects.all()
+    serializer_class = PilotoSerializer
+    lookup_field = 'pk'
+
+
 
 class PilotoListCreateAPIView(ListCreateAPIView):
     queryset = Piloto.objects.all()
