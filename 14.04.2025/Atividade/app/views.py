@@ -85,4 +85,4 @@ def delete_usuario(request, pk):
 
 
     usuario.delete()
-    return Response({'Mensagem':f'foi apagado'}, status=status.HTTP_200_OK)
+    return Response({'Mensagem':'foi apagado'}, status=status.HTTP_200_OK)
