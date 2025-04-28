@@ -53,6 +53,10 @@ class PilotoListCreateAPIView(ListCreateAPIView):
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
     
+
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)
+    
     @swagger_auto_schema(
             operation_description='cria novo piloto',
             request_body=PilotoSerializer,
@@ -61,10 +65,6 @@ class PilotoListCreateAPIView(ListCreateAPIView):
                 400: 'ERROOOOOOOOO'
             }
     )
-
-    def post(self, request, *args, **kwargs):
-        return super().post(request, *args, **kwargs)
-    
     def get_queryset(self):
         queryset = super().get_queryset()
         nome = self.request.query_params.get('nome')
