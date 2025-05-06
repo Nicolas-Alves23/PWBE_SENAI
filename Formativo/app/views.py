@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
-from .models import Usuario, Disciplina, Reserva_ambiente
-from .serializers import UsuarioSerializer, DisciplinaSerializer, ReservaSerializer, LoginSerializer
+from .models import Usuario, Disciplina, Reserva_ambiente, Sala
+from .serializers import UsuarioSerializer, DisciplinaSerializer, ReservaSerializer, LoginSerializer, SalaSerializer
 from .permissions import IsGestor, IsProfessor, IsGestorOuDono
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -13,8 +13,8 @@ class UsuarioListCreate(ListCreateAPIView):
 
 class UsuarioRetriveveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     queryset = Usuario.objects.all()
-    serializer = UsuarioSerializer
-    permission_classs = [IsGestor]
+    serializer_class = UsuarioSerializer
+    permission_classes = [IsGestor]
     lookup_field = 'pk'
 
 class DisciplinaListCreate(ListCreateAPIView):
@@ -60,7 +60,6 @@ class ReservaAmbienteRetriveveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsGestorOuDono]
     lookup_field = 'pk'
 
-
 class ReservaAmbienteProfessorList(ListAPIView):
 
     serializer_class = ReservaSerializer
@@ -71,3 +70,15 @@ class ReservaAmbienteProfessorList(ListAPIView):
 
 class LoginView(TokenObtainPairView):
     serializer_class = LoginSerializer
+
+class SalaListCreate(ListCreateAPIView):
+    queryset = Sala.objects.all()
+    serializer_class = SalaSerializer
+    permission_classes = [IsGestor]
+
+class SalaRetriveveUpdateDestroy(RetrieveUpdateDestroyAPIView):
+    queryset = Sala.objects.all()
+    serializer_class = SalaSerializer
+    permission_classes = [IsGestor]
+    lookup_field = 'pk'
+

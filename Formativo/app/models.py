@@ -28,7 +28,7 @@ class Usuario(AbstractUser):
     ]
 
     tipo = models.CharField(max_length=1, choices=TIPO_CHOICES, default='P')
-    ni = models.PositiveIntegerField(_("Número de identificação"))
+    ni = models.PositiveIntegerField(_("Número de identificação"), unique=True)
     telefone = models.CharField(_("Número de telefone padrão '(xx)xxxxx-xxxx'"),
         max_length= 30,
         validators=[telefone_validator],

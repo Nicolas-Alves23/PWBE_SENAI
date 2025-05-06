@@ -2,11 +2,11 @@ from rest_framework.permissions import BasePermission
 
 class IsGestor(BasePermission):
     def has_permission(self, request, view):
-        return request.user.is_authenticaded and request.user.tipo == "G"
+        return request.user.is_authenticated and request.user.tipo == "G"
 
 class IsProfessor(BasePermission):
     def has_permission(self, request, view):
-        return request.user.is_authenticaded and request.user.tipo == "P"
+        return request.user.is_authenticated and request.user.tipo == "P"
 
 class IsGestorOuDono(BasePermission):
     def has_permission(self, request, view, obj):
