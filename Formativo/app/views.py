@@ -82,3 +82,4 @@ class SalaRetriveveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsGestor]
     lookup_field = 'pk'
 
+ 
