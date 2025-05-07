@@ -20,7 +20,7 @@ urlpatterns = [
     path('reserva_crud/<int:pk>/', ReservaAmbienteRetriveveUpdateDestroy.as_view()),
     path('reserva_professor/', ReservaAmbienteProfessorList.as_view()),
 
-    # sala
+    # Sala
     path('sala/', SalaListCreate.as_view()),
     path('sala_crud/<int:pk>/', SalaRetriveveUpdateDestroy.as_view()),
 
